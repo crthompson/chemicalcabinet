@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Authenticator } from '@aws-amplify/ui-react';
-import { Amplify } from 'aws-amplify';
-import '@aws-amplify/ui-react/styles.css';
-import outputs from "../amplify_outputs.json";
-
-Amplify.configure(outputs);
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,15 +22,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (    
-    <Authenticator>
-      {({ signOut, user }) => (
-        <main className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-          <h1>Hello {user?.username}</h1>
-          <button onClick={signOut}>Sign out</button>
-          {children}
-        </main>
-      )}
-    </Authenticator>
+  return (
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        {children}
+      </body>
+    </html>
   );
 }
