@@ -10,8 +10,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
-import { deleteProduct } from './actions';
-import type { Schema } from "../../../amplify/data/resource";
+import { deleteProduct } from '../actions';
+import type { Schema } from "../../../../amplify/data/resource";
 
 export function ChemicalCard({ chemical }: { chemical: Schema["Chemicals"]["type"] }) {
   return (
@@ -21,20 +21,20 @@ export function ChemicalCard({ chemical }: { chemical: Schema["Chemicals"]["type
           alt="Product image"
           className="aspect-square rounded-md object-cover"
           height="64"
-          src={"../public/noun-jar.svg"} 
+          src={"noun-jar.svg"} 
           width="64"
         />
       </TableCell>
-      <TableCell className="font-medium">{chemical.name}</TableCell>
+      <TableCell className="font-medium">{chemical?.name}</TableCell>
       <TableCell>
         <Badge variant="outline" className="capitalize">
-          {chemical.name}
+          {chemical?.name}
         </Badge>
       </TableCell>
-      <TableCell className="hidden md:table-cell">{`$${chemical.course}`}</TableCell>
-      <TableCell className="hidden md:table-cell">{chemical.required}</TableCell>
+      <TableCell className="hidden md:table-cell">{`${chemical?.course}`}</TableCell>
+      <TableCell className="hidden md:table-cell">{chemical?.required}</TableCell>
       <TableCell className="hidden md:table-cell">
-        {chemical.location?.toString()}
+        {chemical?.location?.toString()}
       </TableCell>
       <TableCell>
         <DropdownMenu>

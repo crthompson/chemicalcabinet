@@ -5,11 +5,18 @@ const schema = a.schema({
     .model({
       id: a.id(),
       name: a.string(),
+      cas: a.string(),
+      amount: a.string(),
+      disposal: a.boolean(),
       classification: a.string(),
-      course: a.json(),
+      floor: a.integer(),
+      area: a.string(),
       location: a.json(),
       notes: a.string(),
+      specialStorage: a.string(),
+      aka: a.json(),
       required: a.boolean(),
+      course: a.json()
     })
     .authorization((allow) => [allow.publicApiKey()]),
 });

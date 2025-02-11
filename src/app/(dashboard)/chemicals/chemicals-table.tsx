@@ -19,28 +19,26 @@ import { ChemicalCard } from './chemical-card'
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import type { Schema } from "../../../amplify/data/resource";
+import type { Schema } from "../../../../amplify/data/resource";
 
 export function ChemicalsTable({
   chemicals,
-  offset,
-  totalChemicals
+  offset
 }: {
   chemicals: Schema["Chemicals"]["type"][];
-  offset: number;
-  totalChemicals: number;
+  offset: string;
 }) {
   
   const router = useRouter();
-  const productsPerPage = 5;
 
   function prevPage() {
     router.back();
   }
 
   function nextPage() {
-    router.push(`/?offset=${offset}`, { scroll: false });
+    console.log("offset", offset);
   }
+
 
   return (
     <Card>
@@ -78,20 +76,12 @@ export function ChemicalsTable({
       </CardContent>
       <CardFooter>
         <form className="flex items-center w-full justify-between">
-          <div className="text-xs text-muted-foreground">
-            Showing{' '}
-            <strong>
-              {Math.max(0, Math.min(offset - productsPerPage, totalChemicals) + 1)}-{offset}
-            </strong>{' '}
-            of <strong>{totalChemicals}</strong> products
-          </div>
           <div className="flex">
             <Button
               onClick={prevPage}
               variant="ghost"
               size="sm"
               type="button"
-              disabled={offset === productsPerPage}
             >
               <ChevronLeft className="mr-2 h-4 w-4" />
               Prev
@@ -101,7 +91,6 @@ export function ChemicalsTable({
               variant="ghost"
               size="sm"
               type="button"
-              disabled={offset + productsPerPage > totalChemicals}
             >
               Next
               <ChevronRight className="ml-2 h-4 w-4" />

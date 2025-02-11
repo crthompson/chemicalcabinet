@@ -1,12 +1,10 @@
 import Link from 'next/link';
 import {
   Home,
-  LineChart,
   Package,
   Package2,
   PanelLeft,
   Settings,
-  ShoppingCart,
   Users2
 } from 'lucide-react';
 
@@ -25,9 +23,8 @@ import {
   TooltipContent,
   TooltipTrigger
 } from '@/components/ui/tooltip';
-import { Analytics } from '@vercel/analytics/react';
 import { User } from './user';
-import { VercelLogo } from '@/components/icons';
+import { ChemicalLogo, SettingsIcon } from '@/components/icons';
 import Providers from './providers';
 import { NavItem } from './nav-item';
 import { SearchInput } from './search';
@@ -52,7 +49,6 @@ export default function DashboardLayout({
             {children}
           </main>
         </div>
-        <Analytics />
       </main>
     </Providers>
   );
@@ -63,31 +59,23 @@ function DesktopNav() {
     <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
       <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
         <Link
-          href="https://vercel.com/templates/next.js/admin-dashboard-tailwind-postgres-react-nextjs"
+          href=""
           className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
         >
-          <VercelLogo className="h-3 w-3 transition-all group-hover:scale-110" />
-          <span className="sr-only">Acme Inc</span>
+          <ChemicalLogo className="transition-all group-hover:scale-110" />
+          <span className="sr-only">Weber State Chemistry Labs</span>
         </Link>
 
-        <NavItem href="#" label="Dashboard">
+        <NavItem href="/" label="Dashboard">
           <Home className="h-5 w-5" />
         </NavItem>
 
-        <NavItem href="#" label="Orders">
-          <ShoppingCart className="h-5 w-5" />
-        </NavItem>
-
-        <NavItem href="/" label="Products">
+        <NavItem href="/chemicals" label="Chemicals">
           <Package className="h-5 w-5" />
         </NavItem>
 
-        <NavItem href="/customers" label="Customers">
-          <Users2 className="h-5 w-5" />
-        </NavItem>
-
-        <NavItem href="#" label="Analytics">
-          <LineChart className="h-5 w-5" />
+        <NavItem href="/upload" label="Upload">
+          <SettingsIcon className="h-5 w-5" />
         </NavItem>
       </nav>
       <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
@@ -135,13 +123,6 @@ function MobileNav() {
           </Link>
           <Link
             href="#"
-            className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-          >
-            <ShoppingCart className="h-5 w-5" />
-            Orders
-          </Link>
-          <Link
-            href="#"
             className="flex items-center gap-4 px-2.5 text-foreground"
           >
             <Package className="h-5 w-5" />
@@ -153,13 +134,6 @@ function MobileNav() {
           >
             <Users2 className="h-5 w-5" />
             Customers
-          </Link>
-          <Link
-            href="#"
-            className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-          >
-            <LineChart className="h-5 w-5" />
-            Settings
           </Link>
         </nav>
       </SheetContent>
@@ -179,12 +153,12 @@ function DashboardBreadcrumb() {
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href="#">Products</Link>
+            <Link href="#">Chemicals</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>All Products</BreadcrumbPage>
+          <BreadcrumbPage>All Chemicals</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

@@ -22,7 +22,7 @@ export async function User() {
           className="overflow-hidden rounded-full"
         >
           <Image
-            src={user?.image ?? '/placeholder-user.jpg'}
+            src={user?.image ?? '/noun-jar.svg'}
             width={36}
             height={36}
             alt="Avatar"
