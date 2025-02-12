@@ -22,14 +22,14 @@ export default function CustomersPage() {
       fetchChemicals("");
   }, []);
 
-  const fetchChemicals = async (currentToken: string) => {
+  const fetchChemicals = async (token: string) => {
     const {data: chemicals, errors, nextToken} = await client.models.Chemicals.list({
-      limit: 5,
-      nextToken: currentToken
+      limit: 50,
+      nextToken: token
     });
     console.log(chemicals);
     setChemicals(chemicals);
-    setCurrentToken(currentToken);
+    setCurrentToken(token);
     setNextToken(nextToken ?? "");
     if(errors){
       errors.map((error) => console.error(error.message));
