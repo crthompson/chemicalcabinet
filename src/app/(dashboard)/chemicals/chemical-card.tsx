@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
-import { deleteProduct } from '../actions';
+//import { deleteProduct } from '../actions';
 import type { Schema } from "../../../../amplify/data/resource";
 
 export function ChemicalCard({ chemical }: { chemical: Schema["Chemicals"]["type"] }) {
@@ -38,11 +38,7 @@ export function ChemicalCard({ chemical }: { chemical: Schema["Chemicals"]["type
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>
-              <form action={deleteProduct}>
-                <button type="submit">Delete</button>
-              </form>
-            </DropdownMenuItem>
+            <DropdownMenuItem>Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </TableCell>

@@ -19,12 +19,13 @@ import { ChemicalCard } from './chemical-card'
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { Schema } from "../../../../amplify/data/resource";
+import { FilterSearch } from './filter-search';
 
 interface ChemicalsTableProps {
   chemicals: Schema["Chemicals"]["type"][];
   currentToken: string;
   nextToken: string;
-  fetchChemicals: (token: string) => void;
+  fetchChemicals: (token: string, searchTerm?: string) => void;
 }
 
 export function ChemicalsTable({
@@ -34,6 +35,9 @@ export function ChemicalsTable({
   fetchChemicals
 }: ChemicalsTableProps) {
   
+  const handleSearch = (searchTerm: string) => {
+    fetchChemicals("", searchTerm);
+  };
 
   function prevPage() {
     fetchChemicals(currentToken); 
@@ -48,7 +52,9 @@ export function ChemicalsTable({
       <CardHeader>
         <CardTitle>Chemicals</CardTitle>
         <CardDescription>
-          Manage your chemicals.
+          <div className="flex items-center gap-2">
+            <FilterSearch onSearch={handleSearch} />
+          </div>
         </CardDescription>
       </CardHeader>
       <CardContent>

@@ -19,7 +19,7 @@ export async function User() {
         <Button
           variant="outline"
           size="icon"
-          className="overflow-hidden rounded-full"
+          className="overflow-hidden rounded-full absolute right-2.5 top-[.75rem]"
         >
           <Image
             src={user?.image ?? '/noun-jar.svg'}

@@ -17,23 +17,23 @@ export default function CustomersPage() {
   const [chemicals, setChemicals] = useState<Schema["Chemicals"]["type"][]>([]);  
   const [nextToken, setNextToken] = useState("");
   const [currentToken, setCurrentToken] = useState("");
-  
+
   useEffect(() => {
-      fetchChemicals("");
+    fetchChemicals("");
   }, []);
 
-  const fetchChemicals = async (token: string) => {
-    const {data: chemicals, errors, nextToken} = await client.models.Chemicals.list({
+  const fetchChemicals = async (token: string, searchTerm: string = "") => {
+    const { data: chemicals, errors, nextToken } = await client.models.Chemicals.list({
       limit: 50,
-      nextToken: token
+      nextToken: token,
+      filter: searchTerm ? { name: { contains: searchTerm } } : undefined
     });
-    console.log(chemicals);
     setChemicals(chemicals);
     setCurrentToken(token);
     setNextToken(nextToken ?? "");
-    if(errors){
+    if (errors) {
       errors.map((error) => console.error(error.message));
-      return
+      return;
     }
   }
   
