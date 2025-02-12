@@ -1,5 +1,4 @@
-import Image from 'next/image';
-import { Badge } from '@/components/ui/badge';
+
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -16,26 +15,18 @@ import type { Schema } from "../../../../amplify/data/resource";
 export function ChemicalCard({ chemical }: { chemical: Schema["Chemicals"]["type"] }) {
   return (
     <TableRow>
-      <TableCell className="hidden sm:table-cell">
-        <Image
-          alt="Product image"
-          className="aspect-square rounded-md object-cover"
-          height="64"
-          src={"noun-jar.svg"} 
-          width="64"
-        />
-      </TableCell>
       <TableCell className="font-medium">{chemical?.name}</TableCell>
-      <TableCell>
-        <Badge variant="outline" className="capitalize">
-          {chemical?.name}
-        </Badge>
-      </TableCell>
-      <TableCell className="hidden md:table-cell">{`${chemical?.course}`}</TableCell>
-      <TableCell className="hidden md:table-cell">{chemical?.required}</TableCell>
-      <TableCell className="hidden md:table-cell">
-        {chemical?.location?.toString()}
-      </TableCell>
+      <TableCell className="font-medium">{chemical?.cas}</TableCell>
+      <TableCell className="font-medium">{chemical?.amount}</TableCell>
+      <TableCell className="font-medium">{chemical?.disposal}</TableCell>
+      <TableCell className="font-medium">{chemical?.classification}</TableCell>
+      <TableCell className="font-medium">{chemical?.floor}</TableCell>
+      <TableCell className="font-medium">{chemical?.area}</TableCell>
+      <TableCell className="font-medium">{...JSON.parse(chemical?.location?.toString() ?? "")}</TableCell>
+      <TableCell className="font-medium">{chemical?.specialStorage}</TableCell>
+      <TableCell className="font-medium">{...JSON.parse(chemical?.aka?.toString() ?? "")}</TableCell>
+      <TableCell className="font-medium">{chemical?.required}</TableCell>
+      <TableCell className="font-medium">{...JSON.parse(chemical?.course?.toString() ?? "")}</TableCell>
       <TableCell>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

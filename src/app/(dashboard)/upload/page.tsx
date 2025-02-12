@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
 import {
-  TableHead,
   TableRow,
   TableHeader,
   TableBody,
@@ -29,19 +28,37 @@ Amplify.configure(outputs);
 const client = generateClient<Schema>();
 
 function ExcelReader() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<ExcelRow[]>([]);
 
-  const handleFileUpload = (e) => {
-    const file = e.target.files[0];
+  interface ExcelRow {
+    "Preferred name": string;
+    "CAS": string;
+    "Amount": string;
+    "Marked for Disposal": string;
+    "Classification": string;
+    "Floor": string;
+    "Area": string;
+    "Additional Location Details": string;
+    "Special Storage": string;
+    "Also Known As": string;
+    "Required/Course": string;
+  }
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
     const reader = new FileReader();
 
-    reader.onload = (evt) => {
+    reader.onload = (evt: ProgressEvent<FileReader>): void => {
       const bstr = evt.target?.result;
+      if (typeof bstr !== 'string') return;
+
       const wb = XLSX.read(bstr, { type: 'binary' });
-      console.log(wb.SheetNames)
+      console.log(wb.SheetNames);
       const wsName = wb.SheetNames[0];
       const ws = wb.Sheets[wsName];
-      const parsedData = XLSX.utils.sheet_to_json(ws);
+      const parsedData: ExcelRow[] = XLSX.utils.sheet_to_json(ws);
       setData(parsedData?.length ? parsedData : []);
     };
     reader.readAsBinaryString(file);
@@ -52,45 +69,43 @@ function ExcelReader() {
     return JSON.stringify(value.split(',').map((v:string) => v.trim()));
   }
 
-  function parseCourse(value:string) : [string[], boolean] {   
-    if(!value) return [[], false]; 
-    const required = value.toLowerCase().includes('yes');
-    const course = value.replace("Yes,", "").split(',');
+  function parseCourse(value:string) : [string, boolean] {   
+    if(!value) return [JSON.stringify(""), false]; 
+    let required = false;
+    try{
+      required = value?.toString().toLowerCase().includes('yes');}
+    catch(e){
+      console.log("value-", value, e);}
+
+    const course = JSON.stringify(value?.toString().replace("Yes,", "").trim().split(/\s*,\s*/));
+    
     return [course, required];
   }
 
   function processExcel() {
     data.forEach(async (row) => {
-      console.log(row);
       const name = row["Preferred name"];
-      const cas = row["CAS"];
-      const amount = row["Amount"];
-      const disposal = row["Marked for Disposal"];
-      const classification = row["Classification"];
-      const floor = row["Floor"];
-      const area = row["Area"];
-      const location = parseDelimitedValue(row["Additional Location Details"]);
-      const storage = row["Special Storage"];
-      const aka = parseDelimitedValue(row["Also Known As"]);
-      const [course, required]: [string[], boolean] = parseCourse(row["Required/Course"]);
+      const [course, required]: [string, boolean] = parseCourse(row["Required/Course"]);
+      const disposal = row["Marked for Disposal"]?.toLowerCase().includes('yes');
+      console.log(row["Preferred name"], course);
       const notes = "";
-      console.log(name);
       const newChemical = await client.models.Chemicals.create({
-        name,
-        cas,
-        amount,
-        disposal,
-        classification,
-        floor,
-        area,
-        location,
-        specialStorage: storage,
-        aka,
-        course,
-        required,
-        notes
+        name: name,
+        cas : row["CAS"],
+        amount : row["Amount"],
+        disposal : disposal,
+        classification : row["Classification"],
+        floor : parseInt(row["Floor"], 10),
+        area : row["Area"],
+        location : parseDelimitedValue(row["Additional Location Details"]),
+        specialStorage: row["Special Storage"],
+        aka : parseDelimitedValue(row["Also Known As"]),
+        course : course,
+        required : required,
+        notes : notes
       });
       if (newChemical.errors) {
+        console.log(name, course, required, row["Required/Course"]);
         newChemical.errors.map((error) => console.error(error.message));
         return;
       }

@@ -17,26 +17,25 @@ export default function CustomersPage() {
   const [chemicals, setChemicals] = useState<Schema["Chemicals"]["type"][]>([]);  
   const [nextToken, setNextToken] = useState("");
   const [currentToken, setCurrentToken] = useState("");
-  const [state, setState] = useState("");
   
   useEffect(() => {
+      fetchChemicals("");
+  }, []);
 
-      const fetchMoreChemicals = async () => {
-        const {data: chemicals, errors, nextToken: offset} = await client.models.Chemicals.list({
-          limit: 100
-        });
-
-        if(errors){
-          errors.map((error) => console.error(error.message));
-          return
-        }
-      }
-
-      fetchMoreChemicals();
-  });
-
-  console.log("current", currentToken)
-  console.log("next", nextToken)
+  const fetchChemicals = async (currentToken: string) => {
+    const {data: chemicals, errors, nextToken} = await client.models.Chemicals.list({
+      limit: 5,
+      nextToken: currentToken
+    });
+    console.log(chemicals);
+    setChemicals(chemicals);
+    setCurrentToken(currentToken);
+    setNextToken(nextToken ?? "");
+    if(errors){
+      errors.map((error) => console.error(error.message));
+      return
+    }
+  }
   
   return (
     <Tabs defaultValue="all">
@@ -62,7 +61,9 @@ export default function CustomersPage() {
       <TabsContent value="all">
         <ChemicalsTable
           chemicals={chemicals}
-          offset={nextToken}
+          currentToken={currentToken}
+          nextToken={nextToken}
+          fetchChemicals={fetchChemicals}
         />
       </TabsContent>
     </Tabs>

@@ -16,29 +16,32 @@ import {
   CardTitle
 } from '@/components/ui/card';
 import { ChemicalCard } from './chemical-card'
-import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { Schema } from "../../../../amplify/data/resource";
 
+interface ChemicalsTableProps {
+  chemicals: Schema["Chemicals"]["type"][];
+  currentToken: string;
+  nextToken: string;
+  fetchChemicals: (token: string) => void;
+}
+
 export function ChemicalsTable({
   chemicals,
-  offset
-}: {
-  chemicals: Schema["Chemicals"]["type"][];
-  offset: string;
-}) {
+  currentToken,
+  nextToken,
+  fetchChemicals
+}: ChemicalsTableProps) {
   
-  const router = useRouter();
 
   function prevPage() {
-    router.back();
+    fetchChemicals(currentToken); 
   }
 
   function nextPage() {
-    console.log("offset", offset);
+    fetchChemicals(nextToken); 
   }
-
 
   return (
     <Card>
@@ -52,16 +55,18 @@ export function ChemicalsTable({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="hidden w-[100px] sm:table-cell">
-                <span className="sr-only">Image</span>
-              </TableHead>
               <TableHead>Name</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="hidden md:table-cell">Price</TableHead>
-              <TableHead className="hidden md:table-cell">
-                Total Sales
-              </TableHead>
-              <TableHead className="hidden md:table-cell">Created at</TableHead>
+              <TableHead>CAS</TableHead>
+              <TableHead>Amount</TableHead>
+              <TableHead>Marked for Disposal</TableHead>
+              <TableHead>Classification</TableHead>
+              <TableHead>Floor</TableHead>
+              <TableHead>Area</TableHead>
+              <TableHead>Location Details</TableHead>
+              <TableHead>Special Storage</TableHead>
+              <TableHead>Also Known As</TableHead>
+              <TableHead>Required</TableHead>
+              <TableHead>Course</TableHead>
               <TableHead>
                 <span className="sr-only">Actions</span>
               </TableHead>
