@@ -18,17 +18,9 @@ export default function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardFooter>
-          <form
-            action={async () => {
-              'use server';
-              await signIn('github', {
-                redirectTo: '/'
-              });
-            }}
-            className="w-full"
-          >
+          <div className="mb-4">
             <Button className="w-full">Sign in with GitHub</Button>
-          </form>
+            </div>
         </CardFooter>
       </Card>
     </div>
