@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import Image from 'next/image';
+//import Image from 'next/image';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,7 +11,7 @@ import {
 import Link from 'next/link';
 
 export async function User() {
-  let user = {};
+  const user = {};
 
   return (
     <DropdownMenu>
@@ -20,14 +20,7 @@ export async function User() {
           variant="outline"
           size="icon"
           className="overflow-hidden rounded-full absolute right-2.5 top-[.75rem]"
-        >
-          <Image
-            src={user?.image ?? '/noun-jar.svg'}
-            width={36}
-            height={36}
-            alt="Avatar"
-            className="overflow-hidden rounded-full"
-          />
+        ><div></div>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -38,14 +31,9 @@ export async function User() {
         <DropdownMenuSeparator />
         {user ? (
           <DropdownMenuItem>
-            <form
-              action={async () => {
-                'use server';
-                await signOut();
-              }}
-            >
+            <div>
               <button type="submit">Sign Out</button>
-            </form>
+            </div>
           </DropdownMenuItem>
         ) : (
           <DropdownMenuItem>
