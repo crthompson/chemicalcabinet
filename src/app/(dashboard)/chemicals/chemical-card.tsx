@@ -1,5 +1,6 @@
 
 import { Button } from '@/components/ui/button';
+import { JSX } from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +14,13 @@ import { TableCell, TableRow } from '@/components/ui/table';
 import type { Schema } from "../../../../amplify/data/resource";
 
 export function ChemicalCard({ chemical }: { chemical: Schema["Chemicals"]["type"] }) {
+  const course = JSON.parse(chemical?.course?.toString() ?? "");
+  let courseElements: JSX.Element[] = [];
+  if(Array.isArray(course)){
+    courseElements = course.map((element: string, index: number) => (
+      <li className='bulleted' key={index}>{element}</li>
+    ));
+  }
   return (
     <TableRow>
       <TableCell className="font-medium">{chemical?.name}</TableCell>
@@ -22,11 +30,20 @@ export function ChemicalCard({ chemical }: { chemical: Schema["Chemicals"]["type
       <TableCell className="font-medium">{chemical?.classification}</TableCell>
       <TableCell className="font-medium">{chemical?.floor}</TableCell>
       <TableCell className="font-medium">{chemical?.area}</TableCell>
-      <TableCell className="font-medium">{...JSON.parse(chemical?.location?.toString() ?? "")}</TableCell>
+      <TableCell className="font-medium">
+        {JSON.parse(chemical?.location?.toString() ?? "").map((element: string, index: number) => (
+          <li className='bulleted' key={index}>{element}</li>
+        ))}
+      </TableCell>
       <TableCell className="font-medium">{chemical?.specialStorage}</TableCell>
-      <TableCell className="font-medium">{...JSON.parse(chemical?.aka?.toString() ?? "")}</TableCell>
+      <TableCell className="font-medium">
+        {JSON.parse(chemical?.aka?.toString() ?? "").map((element: string, index: number) => (
+          <li className='bulleted' key={index}>{element}</li>
+        ))}
+      </TableCell>
       <TableCell className="font-medium">{chemical?.required}</TableCell>
-      <TableCell className="font-medium">{...JSON.parse(chemical?.course?.toString() ?? "")}</TableCell>
+      <TableCell className="font-medium">{courseElements}
+      </TableCell>
       <TableCell>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

@@ -34,6 +34,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
+    
     <Providers>
       <main className="flex min-h-screen w-full flex-col bg-muted/40">
         <DesktopNav />
