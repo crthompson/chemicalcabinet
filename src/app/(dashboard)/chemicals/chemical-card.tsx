@@ -30,43 +30,29 @@ export function ChemicalCard({ chemical }: { chemical: Schema["Chemicals"]["type
       <li className='not-bulleted' key={index}>{element}</li>
     ));
   }
+
   return (
     <TableRow>
-      <TableCell className="font-medium">{chemical?.name}</TableCell>
-      <TableCell className="font-medium">{chemical?.cas}</TableCell>
-      <TableCell className="font-medium">{chemical?.amount}</TableCell>
-      <TableCell className="font-medium">{chemical?.disposal}</TableCell>
-      <TableCell className="font-medium">{chemical?.classification}</TableCell>
-      <TableCell className="font-medium">{chemical?.floor}</TableCell>
+      <TableCell width={220} className="font-medium">{chemical?.name}</TableCell>
+      <TableCell width={120} className="font-medium">{chemical?.cas}</TableCell>
+      <TableCell width={120} className="font-medium">{chemical?.amount}</TableCell>
+      <TableCell width={20} className="font-medium">{chemical?.disposal ? "Yes": "No"}</TableCell>
+      <TableCell width={120} className="font-medium">{chemical?.classification}</TableCell>
+      <TableCell width={20} className="font-medium">{chemical?.floor}</TableCell>
       <TableCell className="font-medium">{chemical?.area}</TableCell>
-      <TableCell className="font-medium">
+      <TableCell width={20} className="font-medium">
         {JSON.parse(chemical?.location?.toString() ?? "").map((element: string, index: number) => (
           <li className='not-bulleted' key={index}>{element}</li>
         ))}
       </TableCell>
-      <TableCell className="font-medium">{specialStorageElements}</TableCell>
-      <TableCell className="font-medium">
+      <TableCell width={20} className="font-medium">{specialStorageElements}</TableCell>
+      <TableCell width={220} className="font-medium">
         {JSON.parse(chemical?.aka?.toString() ?? "").map((element: string, index: number) => (
           <li key={index}><span>{element}</span></li>
         ))}
       </TableCell>
-      <TableCell className="font-medium">{chemical?.required}</TableCell>
-      <TableCell className="font-medium">{courseElements}
-      </TableCell>
-      <TableCell>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button aria-haspopup="true" size="icon" variant="ghost">
-              <MoreHorizontal className="h-4 w-4" />
-              <span className="sr-only">Toggle menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+      <TableCell width={20} className="font-medium">{chemical?.required ? "Yes": "No"}</TableCell>
+      <TableCell width={20} className="font-medium">{courseElements}
       </TableCell>
     </TableRow>
   );
