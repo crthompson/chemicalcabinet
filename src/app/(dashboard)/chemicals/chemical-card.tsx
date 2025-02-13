@@ -1,14 +1,4 @@
-
-import { Button } from '@/components/ui/button';
 import { JSX } from 'react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
-import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 //import { deleteProduct } from '../actions';
 import type { Schema } from "../../../../amplify/data/resource";
