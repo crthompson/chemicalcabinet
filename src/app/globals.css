@@ -90,3 +90,10 @@ input[type='search']::-moz-search-cancel-button {
 input[type='search']::-ms-clear {
   display: none;
 }
+
+li.not-bulleted {
+  display: inline-block
+}
+li {
+  list-style-type: circle;
+}

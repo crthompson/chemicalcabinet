@@ -13,7 +13,7 @@ const schema = a.schema({
       area: a.string(),
       location: a.json(),
       notes: a.string(),
-      specialStorage: a.string(),
+      specialStorage: a.json(),
       aka: a.json(),
       required: a.boolean(),
       course: a.json()

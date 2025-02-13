@@ -64,9 +64,14 @@ function ExcelReader() {
     reader.readAsBinaryString(file);
   };
 
-  function parseDelimitedValue(value:string) {
+  function parseDelimited(value:string) {
     if(!value) return JSON.stringify([]);
     return JSON.stringify(value.split(',').map((v:string) => v.trim()));
+  }
+
+  function parseDelimitedWithSpace(value:string) {
+    if(!value) return JSON.stringify([]);
+    return JSON.stringify(value.split(', ').map((v:string) => v.trim()));
   }
 
   function parseCourse(value:string) : [string, boolean] {   
@@ -97,9 +102,9 @@ function ExcelReader() {
         classification : row["Classification"],
         floor : parseInt(row["Floor"], 10),
         area : row["Area"],
-        location : parseDelimitedValue(row["Additional Location Details"]),
-        specialStorage: row["Special Storage"],
-        aka : parseDelimitedValue(row["Also Known As"]),
+        location : parseDelimited(row["Additional Location Details"]),
+        specialStorage: parseDelimited(row["Special Storage"]),
+        aka : parseDelimitedWithSpace(row["Also Known As"]),
         course : course,
         required : required,
         notes : notes

@@ -14,11 +14,20 @@ import { TableCell, TableRow } from '@/components/ui/table';
 import type { Schema } from "../../../../amplify/data/resource";
 
 export function ChemicalCard({ chemical }: { chemical: Schema["Chemicals"]["type"] }) {
+
   const course = JSON.parse(chemical?.course?.toString() ?? "");
   let courseElements: JSX.Element[] = [];
   if(Array.isArray(course)){
     courseElements = course.map((element: string, index: number) => (
-      <li className='bulleted' key={index}>{element}</li>
+      <li className='not-bulleted' key={index}>{element}</li>
+    ));
+  }
+
+  const specialStorage = JSON.parse(chemical?.course?.toString() ?? "");
+  let specialStorageElements: JSX.Element[] = [];
+  if(Array.isArray(specialStorage)){
+    specialStorageElements = specialStorage.map((element: string, index: number) => (
+      <li className='not-bulleted' key={index}>{element}</li>
     ));
   }
   return (
@@ -32,13 +41,13 @@ export function ChemicalCard({ chemical }: { chemical: Schema["Chemicals"]["type
       <TableCell className="font-medium">{chemical?.area}</TableCell>
       <TableCell className="font-medium">
         {JSON.parse(chemical?.location?.toString() ?? "").map((element: string, index: number) => (
-          <li className='bulleted' key={index}>{element}</li>
+          <li className='not-bulleted' key={index}>{element}</li>
         ))}
       </TableCell>
-      <TableCell className="font-medium">{chemical?.specialStorage}</TableCell>
+      <TableCell className="font-medium">{specialStorageElements}</TableCell>
       <TableCell className="font-medium">
         {JSON.parse(chemical?.aka?.toString() ?? "").map((element: string, index: number) => (
-          <li className='bulleted' key={index}>{element}</li>
+          <li key={index}><span>{element}</span></li>
         ))}
       </TableCell>
       <TableCell className="font-medium">{chemical?.required}</TableCell>
