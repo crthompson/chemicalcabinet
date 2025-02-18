@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { File, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ChemicalsTable } from './chemicals-table';
+import { ChemicalDetail } from './chemical-detail';
 import { Amplify } from 'aws-amplify';
 import '@aws-amplify/ui-react/styles.css';
 import outputs from "../../../../amplify_outputs.json";
@@ -13,10 +14,11 @@ import { generateClient } from 'aws-amplify/data';
 Amplify.configure(outputs);
 const client = generateClient<Schema>();
 
-export default function CustomersPage() {
+export default function ChemicalsPage() {
   const [chemicals, setChemicals] = useState<Schema["Chemicals"]["type"][]>([]);  
   const [nextToken, setNextToken] = useState("");
   const [currentToken, setCurrentToken] = useState("");
+  const [chemicalDetail, setChemicalDetail] = useState<Schema["Chemicals"]["type"]>();
 
   useEffect(() => {
     fetchChemicals("");
@@ -50,7 +52,11 @@ export default function CustomersPage() {
               Export
             </span>
           </Button>
-          <Button size="sm" className="h-8 gap-1">
+          <Button size="sm" className="h-8 gap-1" onClick={() => 
+            {
+              console.log("Add Chemical");
+              setChemicalDetail({} as Schema["Chemicals"]["type"]);
+            }}>
             <PlusCircle className="h-3.5 w-3.5" />
             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
               Add Chemical
@@ -59,12 +65,19 @@ export default function CustomersPage() {
         </div>
       </div>
       <TabsContent value="all">
+        {!chemicalDetail && 
         <ChemicalsTable
           chemicals={chemicals}
           currentToken={currentToken}
           nextToken={nextToken}
           fetchChemicals={fetchChemicals}
-        />
+          setChemicalDetail={setChemicalDetail}
+        />}
+        
+        {chemicalDetail && 
+        <ChemicalDetail
+          chemical={chemicalDetail}
+        />}
       </TabsContent>
     </Tabs>
   );

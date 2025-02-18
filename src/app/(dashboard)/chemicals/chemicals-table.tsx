@@ -26,13 +26,15 @@ interface ChemicalsTableProps {
   currentToken: string;
   nextToken: string;
   fetchChemicals: (token: string, searchTerm?: string) => void;
+  setChemicalDetail: (chemicalDetail:Schema["Chemicals"]["type"]) => void;
 }
 
 export function ChemicalsTable({
   chemicals,
   currentToken,
   nextToken,
-  fetchChemicals
+  fetchChemicals,
+  setChemicalDetail
 }: ChemicalsTableProps) {
   
   const handleSearch = (searchTerm: string) => {
@@ -80,7 +82,7 @@ export function ChemicalsTable({
           </TableHeader>
           <TableBody>
             {chemicals.map((chemical) => (
-              <ChemicalCard key={chemical.id} chemical={chemical} />
+              <ChemicalCard key={chemical.id} chemical={chemical} onClick={() => setChemicalDetail(chemical)}/>
             ))}
           </TableBody>
         </Table>

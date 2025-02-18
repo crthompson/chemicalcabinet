@@ -97,3 +97,21 @@ li.not-bulleted {
 li {
   list-style-type: circle;
 }
+.bg-light-blue {
+  background-color: lightblue;
+}
+.bg-yellow {
+  background-color: yellow;
+}
+.bg-orange {
+  background-color: orange;
+}
+.bg-pink {
+  background-color: pink;
+}
+.bg-blue {
+  background-color: blue;
+}
+.bg-blue {
+  background-color: blue;
+}
