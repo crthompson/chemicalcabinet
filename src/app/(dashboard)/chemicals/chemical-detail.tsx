@@ -1,4 +1,5 @@
 import { JSX, useState } from 'react';
+import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { Schema } from "../../../../amplify/data/resource";
 import { Input } from '@/components/ui/input';
@@ -7,6 +8,14 @@ import { generateClient } from 'aws-amplify/data';
 import { Amplify } from 'aws-amplify';
 import outputs from "../../../../amplify_outputs.json";
 import QRCode from 'react-qr-code'; 
+import {
+  TableHead,
+  TableRow,
+  TableHeader,
+  TableBody,
+  Table,
+  TableCell
+} from '@/components/ui/table';
 
 export function ChemicalDetail({ chemical }: { chemical: Schema["Chemicals"]["type"] }) {
 
@@ -64,42 +73,63 @@ export function ChemicalDetail({ chemical }: { chemical: Schema["Chemicals"]["ty
       <Input key={index} type="text" value={element ?? ""} readOnly />
     ));
   }
+  const myLoader=({src}: { src: string })=>{
+    console.log(src);
+    return src;
+  }
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>{chemical?.name}</CardTitle>
-      </CardHeader>
+        <Table>
+          <TableRow>            
+            <CardTitle>
+              <TableCell width={300}>{chemical?.name}</TableCell>
+              <TableCell><Image loader={myLoader} src={"edit.png"} alt="Edit icons created by Andrean Prabowo - Flaticon" width={16} height={16}/></TableCell>
+            </CardTitle>
+          </TableRow>
+        </Table>
       <CardContent>
-        <div className="grid grid-cols-1 gap-4">
-          <div>
+        
+      <Table>
+        <TableRow>
+          <TableCell>
             <label className="block text-sm font-medium text-gray-700">CAS</label>
             <Input type="text" name="cas" value={chemicalState?.cas ?? ""} onChange={handleChange}/>
-          </div>
-            <div>
-            <label className="block text-sm font-medium text-gray-700">Amount</label>
-            <Input type="text" name="amount" value={chemicalState?.amount ?? ""} onChange={handleChange}/>
-            </div>
+          </TableCell>
+          <TableCell>
             <label className="block text-sm font-medium text-gray-700">Marked for Disposal</label>
             <Input type="text" name="disposal" value={chemicalState?.disposal ? "Yes": "No"} onChange={handleChange}/>
-            </div>
-            <div>
+          </TableCell>
+          <TableCell>
+            <label className="block text-sm font-medium text-gray-700">Amount</label>
+            <Input type="text" name="amount" value={chemicalState?.amount ?? ""} onChange={handleChange}/>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>
             <label className="block text-sm font-medium text-gray-700">Classification</label>
             <Input type="text" name="classification" value={chemicalState?.classification ?? ""} onChange={handleChange}/>
-            </div>
-            <div>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>
             <label className="block text-sm font-medium text-gray-700">Floor</label>
             <Input type="text" name="floor" value={chemicalState?.floor ?? ""} onChange={handleChange}/>
-            </div>
-            <div>
+          </TableCell>
+          <TableCell>
             <label className="block text-sm font-medium text-gray-700">Area</label>
             <Input type="text" name="area" value={chemicalState?.area ?? ""} onChange={handleChange}/>
-            </div>
-            <div>
+          </TableCell>
+          <TableCell>
             <label className="block text-sm font-medium text-gray-700">Location Details</label>
             <Input type="text" name="location" value={chemicalState?.location ?? ""} onChange={handleChange}/>
+          </TableCell>
+        </TableRow>
+      </Table>
+
+            <div>
             </div>
-              <QRCode value={JSON.stringify(chemicalState)} size={16} />
+              <QRCode value={JSON.stringify(chemicalState)} size={160} />
             <div>
 
             </div>
