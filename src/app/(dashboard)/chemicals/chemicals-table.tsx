@@ -73,8 +73,6 @@ export function ChemicalsTable({
               <TableHead>Location Details</TableHead>
               <TableHead>Special Storage</TableHead>
               <TableHead>Also Known As</TableHead>
-              <TableHead>Required</TableHead>
-              <TableHead>Course</TableHead>
               <TableHead>
                 <span className="sr-only">Actions</span>
               </TableHead>

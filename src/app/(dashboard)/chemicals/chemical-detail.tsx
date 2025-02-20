@@ -78,16 +78,24 @@ export function ChemicalDetail({ chemical }: { chemical: Schema["Chemicals"]["ty
     return src;
   }
 
+  function editName(name: import("@aws-amplify/data-schema").Nullable<string> | undefined): import("react").MouseEventHandler<HTMLTableCellElement> | undefined {
+    return () => {
+      const newName = prompt("Edit Chemical Name:", name ?? "");
+      console.log(newName);
+      if (newName !== null) {
+        setChemicalState((chemicalState) => ({
+          ...chemicalState,
+          name: newName,
+        }));
+      }
+    };
+  }
+
   return (
-    <Card>
-        <Table>
-          <TableRow>            
-            <CardTitle>
-              <TableCell width={300}>{chemical?.name}</TableCell>
-              <TableCell><Image loader={myLoader} src={"edit.png"} alt="Edit icons created by Andrean Prabowo - Flaticon" width={16} height={16}/></TableCell>
-            </CardTitle>
-          </TableRow>
-        </Table>
+    <Card>         
+      <CardTitle>
+        <Input type="text" name="name" value={chemicalState?.name ?? ""} onChange={handleChange}/>
+      </CardTitle>
       <CardContent>
         
       <Table>

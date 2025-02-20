@@ -50,9 +50,6 @@ export function ChemicalCard(
           <li key={index}><span>{element}</span></li>
         ))}
       </TableCell>
-      <TableCell width={20} className="font-medium">{chemical?.required ? "Yes": ""}</TableCell>
-      <TableCell width={20} className="font-medium">{courseElements}
-      </TableCell>
     </TableRow>
   );
 }
